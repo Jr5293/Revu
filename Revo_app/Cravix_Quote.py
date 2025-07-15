@@ -140,7 +140,7 @@ if submit:
                        file_name=f"{client_name or 'client'}_quote.pdf",
                        mime="application/pdf")
 
-     import urllib.parse
+    import urllib.parse
     # Build mailto email link (clean formatting)
     subject = f"Service Quote from {company_name or 'Your Business'}"
     body = f"""Hello {client_name or ''},
