@@ -155,8 +155,8 @@ Thanks,
 """
 
     # Encode subject/body for URL
-    subject_encoded = urllib.parse.quote_plus(subject)
-    body_encoded = urllib.parse.quote_plus(body)
+    subject_encoded = urllib.parse.quote(subject)
+    body_encoded = urllib.parse.quote(body)
 
     mailto_link = f"mailto:{client_email}?subject={subject_encoded}&body={body_encoded}"
 
