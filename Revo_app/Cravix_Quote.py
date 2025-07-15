@@ -140,13 +140,27 @@ if submit:
                        file_name=f"{client_name or 'client'}_quote.pdf",
                        mime="application/pdf")
 
-    subject = quote_plus(f"Service Quote from {company_name or 'Your Business'}")
-    body = quote_plus(f"Hello {client_name or ''},%0D%0A%0D%0AHere's your service quote for the job: {job_description or ''}.%0D%0ATotal: ${total_due:.2f}%0D%0A%0D%0AThanks!%0D%0A{company_name or 'Your Business'}")
-    mailto_link = f"mailto:?subject={subject}&body={body}"
-    st.markdown(f"[📧 Send Quote via Email]({mailto_link})", unsafe_allow_html=True)
+     import urllib.parse
+    # Build mailto email link (clean formatting)
+    subject = f"Service Quote from {company_name or 'Your Business'}"
+    body = f"""Hello {client_name or ''},
 
-  
-    try:
-        os.remove(tmpfile.name)
-    except PermissionError:
-        pass
+Here's your service quote for the job: {job_description or ''}.
+Total: ${total_due:.2f}
+
+Please find the attached quote PDF and feel free to reach out with any questions!
+
+Thanks,
+{company_name or 'Your Business'}
+"""
+
+    # Encode subject/body for URL
+    subject_encoded = urllib.parse.quote_plus(subject)
+    body_encoded = urllib.parse.quote_plus(body)
+
+    mailto_link = f"mailto:{client_email}?subject={subject_encoded}&body={body_encoded}"
+
+    # Display instructions + email link
+    st.markdown("### ✉️ Email the Quote")
+    st.markdown(f"[📧 Click to Open Email Client]({mailto_link})", unsafe_allow_html=True)
+    st.markdown("If your email client opens, simply **attach the downloaded PDF** before sending.")
